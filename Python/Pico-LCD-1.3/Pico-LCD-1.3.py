@@ -1,7 +1,7 @@
 
 from machine import Pin,SPI,PWM
 import framebuf
-import time
+import time,random
 import os
 
 BL = 13
@@ -175,7 +175,40 @@ if __name__=='__main__':
     right = Pin(20,Pin.IN,Pin.PULL_UP)
     ctrl = Pin(3,Pin.IN,Pin.PULL_UP)
     
+    # 'blit', 'fill', 'fill_rect', 'hline', 'line', 'pixel', 'rect', 'scroll', 'text', 'vline']
+    
+    # scroll demo
+    LCD.text("Scrolling",10,230,LCD.white)
+    for i in range(25):
+        LCD.scroll(0, -i)
+        LCD.show()
+    
+    #LCD.blit(0,0)
+    
+    #time.sleep(1)    
+    LCD.fill(LCD.blue)
+    
+    # pixel demo
+    for c in range (1,20):
+        for x in range(1,100):
+            LCD.pixel(random.randrange(240),random.randrange(240),LCD.white)
+        LCD.show()
+    
+    time.sleep(1)    
+    LCD.fill(LCD.blue)
+    
+    # line demo
+    for i in range(0,240,20):
+        LCD.line(0,i,i,240,LCD.white)
+        LCD.line(240,i,i,0,LCD.green)
+        LCD.show()
+    
+    time.sleep(1)
+    LCD.fill(LCD.blue)
+    
     while(1):
+        LCD.text("hello world",10,30,LCD.white)
+        
         if keyA.value() == 0:
             LCD.fill_rect(208,15,30,30,LCD.red)
         else :
@@ -233,9 +266,6 @@ if __name__=='__main__':
             LCD.rect(60,105,30,30,LCD.red)
                        
         LCD.show()
+        
     time.sleep(1)
     LCD.fill(0xFFFF)
-
-
-
-
